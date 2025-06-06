@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <?!= include('ManagerStyle'); ?>
+</head>
+<body>
+  <div id="loadingScreen" class="loading-screen">
+    <div class="big-spinner"></div>
+    <div class="loading-text">กำลังบันทึกข้อมูล...</div>
+  </div>
+
+  <div class="success-checkmark" id="loginSuccessCheckmark">
+    <div class="checkmark-circle">
+      <div class="checkmark"></div>
+    </div>
+  </div>
+
+  <div class="page-transition" id="pageTransition">
+    <div class="transition-content">
+    </div>
+  </div>
+
+  <div class="save-success-overlay" id="saveSuccessOverlay">
+    <div class="save-success-content">
+      <div class="save-success-icon">
+        <div class="save-checkmark"></div>
+      </div>
+      <div class="save-success-title">บันทึกสำเร็จ</div>
+      <div class="save-success-message">ข้อมูลได้รับการบันทึกเรียบร้อยแล้ว</div>
+    </div>
+  </div>
+
+  <div class="container" id="mainContainer">
+    <div id="loginDiv">
+      <div class="header-container">
+        <div class="logo-container">
+          <img src="https://github.com/vxmpie/saowaree/blob/main/images/logo.jpg?raw=true" alt="Logo" class="logo" />
+        </div>
+        <h2>ระบบข้อมูลเงินเดือน</h2>
+      </div>
+      <div class="form-group">
+        <label>รหัสผ่าน</label>
+        <input type="password" id="password" onkeypress="handleEnter(event)" placeholder="กรอกรหัสผ่านเพื่อเข้าสู่ระบบ" />
+      </div>
+      <div id="loginError" class="error" style="display: none;"></div>
+      <div class="login-button-container">
+        <button class="login-btn" id="loginBtn" onclick="submitLogin()">
+          <span class="login-text">เข้าสู่ระบบ</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="formDiv" class="hidden">
+      <div class="header-container">
+        <div class="logo-container">
+          <img src="https://github.com/vxmpie/saowaree/blob/main/images/logo.jpg?raw=true" alt="Logo" class="logo" />
+        </div>
+        <h2>กรอกข้อมูลเงินเดือน</h2>
+      </div>
+      
+      <div class="form-group">
+        <label>วันที่จ่ายเงิน</label>
+        <input type="date" id="paidDate" />
+      </div>
+
+      <div class="form-group">
+        <label>รอบ</label>
+        <select id="period">
+          <option value="">เลือกรอบ</option>
+          <option value="1">รอบที่ 1 (1–15)</option>
+          <option value="2">รอบที่ 2 (16–สิ้นเดือน)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>สาขา</label>
+        <select id="branchCode"></select>
+      </div>
+
+      <div class="form-group">
+        <label>รหัสพนักงาน</label>
+        <select id="employeeCode" onchange="loadEmployeeName()"></select>
+      </div>
+
+      <div class="form-group">
+        <label>ชื่อ-สกุล</label>
+        <input type="text" id="employeeName" placeholder="ชื่อ-นามสกุล" readonly/>
+      </div>
+
+      <div class="form-group">
+        <label>เงินเดือนพื้นฐาน (฿)</label>
+        <input type="number" id="basicSalary" onwheel="this.blur()" placeholder="0" inputmode="numeric" pattern="\d*" />
+      </div>
+
+      <div class="form-group">
+        <label>โอที (฿)</label>
+        <input type="number" id="ot" onwheel="this.blur()" placeholder="0" inputmode="numeric" pattern="\d*" />
+      </div>
+
+      <div class="form-group">
+        <label>เงินพิเศษ (฿)</label>
+        <input type="number" id="bonus" onwheel="this.blur()" placeholder="0" inputmode="numeric" pattern="\d*" />
+      </div>
+
+      <div class="form-group">
+        <label>หักประกันสังคม (฿)</label>
+        <input type="number" id="s_deductions" onwheel="this.blur()" placeholder="0" inputmode="numeric" pattern="\d*" />
+      </div>
+
+      <div class="form-group">
+        <label>หักอื่น ๆ (฿)</label>
+        <input type="number" id="o_deductions" onwheel="this.blur()" placeholder="0" inputmode="numeric" pattern="\d*" />
+      </div>
+
+      <div id="formMsg" class="error" style="display: none;"></div>
+      <div class="button-group">
+        <button id="submitBtn" class="submit-btn" onclick="submitForm()">
+          <div class="button-content">
+            <div class="loading-spinner"></div>
+            <span class="button-text">บันทึก</span>
+          </div>
+        </button>
+        <button class="cancel-btn" onclick="cancelForm()">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+
+  <?!= include('ManagerScript'); ?>
+</body>
+</html>
